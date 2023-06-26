@@ -1,5 +1,6 @@
 package ru.hogwarts.school.service.impl;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,11 +18,14 @@ import java.nio.file.Path;
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
 @Service
+@Transactional
 public class AvatarServiceImpl implements AvatarService {
     private final AvatarRepository avatarRepository;
     private final StudentService studentService;
-    @Value("${avatars.dir.path}")
+
+    @Value("${path.to.avatars.folder}")
     private String avatarsDir;
+
 
     public AvatarServiceImpl(AvatarRepository avatarRepository, StudentService studentService) {
         this.avatarRepository = avatarRepository;

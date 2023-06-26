@@ -28,12 +28,13 @@ public class AvatarController {
         this.avatarService = avatarService;
     }
 
-@PostMapping(value = "/{studentId}/avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-@Operation(summary = "Загрузка аватара студента")
-public ResponseEntity<String>uploadAvatar(@PathVariable Long studentId, @RequestParam MultipartFile avatar) throws IOException{
-        avatarService.upLoadAvatar(studentId,avatar);
+    @PostMapping(value = "/{studentId}/avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @Operation(summary = "Загрузка аватара студента")
+    public ResponseEntity<String> uploadAvatar(@PathVariable Long studentId, @RequestParam MultipartFile avatar) throws IOException {
+        avatarService.upLoadAvatar(studentId, avatar);
         return ResponseEntity.ok().build();
-        }
+    }
+
     @GetMapping(value = "/{id}/avatar-from-db")
     @Operation(summary = "Скачивание аватара студента с БД")
     public ResponseEntity<byte[]> downloadAvatar(@PathVariable Long id) {
@@ -43,21 +44,20 @@ public ResponseEntity<String>uploadAvatar(@PathVariable Long studentId, @Request
         headers.setContentLength(avatar.getData().length);
         return ResponseEntity.status(HttpStatus.OK).headers(headers).body(avatar.getData());
     }
+
     @GetMapping(value = "/{studentId}/avatar-from-file")
     @Operation(summary = "Скачивание аватара студента с диска")
-    public void downloadAvatar(@PathVariable Long studentId, HttpServletResponse response) throws IOException{
+    public void downloadAvatar(@PathVariable Long studentId, HttpServletResponse response) throws IOException {
         Avatar avatar = avatarService.findAvatar(studentId);
         Path path = Path.of(avatar.getFilePath());
-        try(InputStream is = Files.newInputStream(path);
-            OutputStream os = response.getOutputStream();) {
+        try (InputStream is = Files.newInputStream(path);
+             OutputStream os = response.getOutputStream();) {
             response.setStatus(200);
             response.setContentType(avatar.getMediaType());
             response.setContentLength((int) avatar.getFileSize());
             is.transferTo(os);
         }
     }
-
-
 
 
 }

@@ -17,9 +17,6 @@ public class StudentServiceImpl implements StudentService {
     public StudentServiceImpl(StudentRepository repository) {
         this.repository = repository;
     }
-
-    // private static Long idCounter = 1L;
-
     @Override
     public Student add(Student student) {
         return repository.save(student);

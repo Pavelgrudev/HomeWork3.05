@@ -42,7 +42,7 @@ public class FacultyController {
         return ResponseEntity.ok(deletedFaculty);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id} ")
     @Operation(summary = "Получение факультета по id")
     public ResponseEntity<Faculty> get(@PathVariable Long id) {
         Faculty faculty = service.get(id);

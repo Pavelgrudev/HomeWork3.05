@@ -20,8 +20,6 @@ public class FacultyServiceImpl implements FacultyService {
         this.repository = repository;
     }
 
-    // private static Long idCounter = 1L;
-
     @Override
     public Faculty add(Faculty faculty) {
         return repository.save(faculty);
